@@ -17,13 +17,18 @@ class Login extends Component {
     }
 
     componentWillMount() {
-        this.props.getUser();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.user.email !== undefined) {
+        if (this.props.user !== null) {
             this.props.history.push('/');
         }
+    }
+
+    submitLogin(event) {
+        event.preventDefault();
+        this.props.login(this.state.email, this.state.password).catch(err => {
+            this.setState({
+                error: err
+            });
+        });
     }
 
     submitLogin(event) {

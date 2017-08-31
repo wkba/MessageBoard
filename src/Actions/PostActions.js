@@ -1,18 +1,29 @@
-import {database} from "../Firebase";
-
+import { database } from '../Firebase';
 export const FETCH_POSTS = 'fetch_posts';
+export const POST_STATUS = 'post_status';
 
 export function getPosts() {
-    console.log('fire getPosts');
     return dispatch => {
-        database.on('value', data => {
-            console.log('data.val() in getPosts', data.val());
+        dispatch({
+            type: POST_STATUS,
+            payload: true
+        });
+        database.on('value', snapshot => {
+            dispatch({
+                type: POST_STATUS,
+                payload: false
+            });
             dispatch({
                 type: FETCH_POSTS,
-                payload: data.val()
+                payload: snapshot.val()
+            });
+        }, () => {
+            dispatch({
+                type: POST_STATUS,
+                payload: -1
             })
-        })
-    }
+        });
+    };
 }
 
 export function savePost(values) {

@@ -1,12 +1,8 @@
-import {GET_USER} from "../Actions/UserActions";
-
-export default function (state = {loading:true}, action) {
-    switch (action.type){
+import { GET_USER } from '../Actions/UserActions';
+export default function (state = {}, action) {
+    switch (action.type) {
         case GET_USER:
-            //何をやっているのだこれは
-            // return {...state, user: action.payload};
-            return {loading:false, ...action.payload};
-
+            return action.payload;
         default:
             return state;
     }

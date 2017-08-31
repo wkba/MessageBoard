@@ -10,26 +10,6 @@ import {getUser, logout} from "../Actions/UserActions";
 
 class App extends Component {
 
-    componentWillMount() {
-
-        //ログイン状態の確認
-        this.props.getPosts();
-        this.props.getUser();
-        //ログイン状態の確認
-        if(this.props.user.loading === false && this.props.user.email === undefined){
-            this.props.history.replace('/Login');
-        }
-    }
-
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps);
-
-        //ログイン状態の確認
-        if(nextProps.user.loading === false &&nextProps.user.email === undefined){
-            this.props.history.replace('/Login');
-        }
-    }
-
     renderPosts() {
         //losashライブラリを使っている
         return _.map(this.props.posts, (post, key) => {
@@ -102,6 +82,7 @@ let form = reduxForm({
 //savePostを追加し忘れていた。
 //this.propsに関数を追加するときは、ここにも明記
 //propsに変数セットしてる + これから使うだろう関数
+
 form = connect((state,ownProps) => ({
     posts: state.posts,
     user: state.user,
